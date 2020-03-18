@@ -10,6 +10,10 @@ A lightweight canvas library which providing 2d draw for [ECharts](https://githu
 - 添加 text 渲染前的格式化支持 textFormatter
 - 配合 echarts 补丁 textIsNumber 实现数字文本的补间动画
 
+```
+npm install zrender@npm:pj-zrender
+```
+
 ```js
 {
   series: {

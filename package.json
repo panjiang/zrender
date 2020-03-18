@@ -8,7 +8,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/panjiang/zrender"
+    "url": "https://github.com/panjiang/zrender.git"
   },
   "scripts": {
     "prepublish": "node build/build.js --prepublish",
