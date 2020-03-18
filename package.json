@@ -1,6 +1,6 @@
 {
-  "name": "zrender",
-  "version": "4.3.0",
+  "name": "pj-zrender",
+  "version": "4.3.01",
   "description": "A lightweight canvas library.",
   "keywords": [
     "canvas",
@@ -8,7 +8,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ecomfe/zrender.git"
+    "url": "https://github.com/panjiang/zrender"
   },
   "scripts": {
     "prepublish": "node build/build.js --prepublish",

@@ -5,6 +5,38 @@ A lightweight canvas library which providing 2d draw for [ECharts](https://githu
 
 [![Build Status](https://travis-ci.com/ecomfe/zrender.svg?branch=master)](https://travis-ci.com/ecomfe/zrender) [![](https://img.shields.io/npm/dw/zrender.svg?label=npm%20downloads&style=flat)](https://www.npmjs.com/package/zrender) ![Commits Since 4.0.0](https://img.shields.io/github/commits-since/ecomfe/zrender/4.0.0.svg?colorB=%234c1&style=flat)
 
+## Fork
+
+- 添加 text 渲染前的格式化支持 textFormatter
+- 配合 echarts 补丁 textIsNumber 实现数字文本的补间动画
+
+```js
+{
+  series: {
+    type: 'custom',
+    renderItem: (params, api) => {
+      const value = api.value(0)
+
+      return {
+        type: 'group',
+        children: [
+          {
+            type: 'text',
+            style: {
+              text: value,
+              textIsNumber: true, // hack: 让数字文本支持补间动画
+              textFormatter: v => { // hack: 补间过程中格式化数字（默认是特别长的小数）
+                return `${Number(v).toFixed(2)}`
+              },
+            },
+            z2: zIndex + 1,
+          },
+        ],
+    }
+  }
+}
+```
+
 ## Document
 
 [https://ecomfe.github.io/zrender-doc/public/](https://ecomfe.github.io/zrender-doc/public/)

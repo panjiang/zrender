@@ -29,6 +29,10 @@ RectText.prototype = {
         this.__dirty && textHelper.normalizeTextStyle(style, true);
 
         var text = style.text;
+        // Inject custom textFormatter function
+        if (style.hasOwnProperty('textFormatter') && typeof style.textFormatter === 'function') {
+            text = style.textFormatter(text);
+        }
 
         // Convert to string
         text != null && (text += '');
