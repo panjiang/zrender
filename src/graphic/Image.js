@@ -65,6 +65,10 @@ ZImage.prototype = {
         // 设置transform
         this.setTransform(ctx);
 
+        // 支持图片opacity
+        var originalGlobalAlpha = ctx.globalAlpha;
+        ctx.globalAlpha = style.opacity || 1;
+
         if (style.sWidth && style.sHeight) {
             var sx = style.sx || 0;
             var sy = style.sy || 0;
@@ -88,6 +92,8 @@ ZImage.prototype = {
         else {
             ctx.drawImage(image, x, y, width, height);
         }
+
+        ctx.globalAlpha = originalGlobalAlpha;
 
         // Draw rect text
         if (style.text != null) {

@@ -282,6 +282,7 @@ svgImage.brush = function (el) {
 
     var dw = style.width;
     var dh = style.height;
+    var opacity = style.hasOwnProperty('opacity') ? style.opacity : 1;
 
     var svgEl = el.__svgEl;
     if (!svgEl) {
@@ -300,6 +301,7 @@ svgImage.brush = function (el) {
 
     attr(svgEl, 'x', x);
     attr(svgEl, 'y', y);
+    attr(svgEl, 'opacity', opacity);
 
     setTransform(svgEl, el.transform);
 
