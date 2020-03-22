@@ -73,7 +73,7 @@ Animatable.prototype = {
 
         var animators = el.animators;
 
-        var animator = new Animator(target, loop);
+        var animator = new Animator(target, loop, null, null, path);
 
         animator.during(function (target) {
             el.dirty(animatingShape);
@@ -101,7 +101,19 @@ Animatable.prototype = {
         var animators = this.animators;
         var len = animators.length;
         for (var i = 0; i < len; i++) {
-            animators[i].stop(forwardToLast);
+            var animator = animators[i];
+            animator.stop(forwardToLast);
+
+            // FIXBUG: 原来代码forwardToLast无法更新当前el，因为echarts测timeline通过调用cloneShallow，重新克隆了对象
+            // 修复方法：把最终修改的值更新到新对象上
+            if (forwardToLast) {
+                if (animator._path === 'style' && this.style) {
+                    Object.assign(this.style, animator._target);
+                }
+                // else if (animator._path === '') {
+                //     Object.assign(this, animator._target);
+                // }
+            }
         }
         animators.length = 0;
 
@@ -179,7 +191,10 @@ function animateTo(animatable, target, time, delay, easing, callback, forceAnima
         time = 500;
     }
     // Stop all previous animations
-    animatable.stopAnimation();
+    // FIXBUG: 参数传true，修复timeline播放时抖动，此处只对position属性的移动有效，
+    // 修复style.x、y方式的移动，还需额外修改 stopAnimation 的代码
+    // 原因是未把之前动画播放完，取到的开始位置值是中间过程值，当下个值没有变化，会被识别成一次补间动画，最终出现了意外的1s抖动
+    animatable.stopAnimation(true);
     animateToShallow(animatable, '', animatable, target, time, delay, reverse);
 
     // Animators may be removed immediately after start

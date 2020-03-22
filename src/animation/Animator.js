@@ -378,6 +378,7 @@ function createTrackClip(animator, easing, oneTrackDone, keyframes, propName, fo
                         p0, p1, p2, p3, w, w * w, w * w * w
                     );
                 }
+
                 setter(
                     target,
                     propName,
@@ -409,6 +410,12 @@ function createTrackClip(animator, easing, oneTrackDone, keyframes, propName, fo
                 else {
                     value = interpolateNumber(kfValues[frame], kfValues[frame + 1], w);
                 }
+
+                if (target.y1 === 81 && percent === 0) {
+                    // eslint-disable-next-line no-console
+                    console.log(target.x1, kfValues);
+                }
+
                 setter(
                     target,
                     propName,
@@ -442,9 +449,10 @@ function createTrackClip(animator, easing, oneTrackDone, keyframes, propName, fo
  * @param {Function} getter
  * @param {Function} setter
  */
-var Animator = function (target, loop, getter, setter) {
+var Animator = function (target, loop, getter, setter, path) {
     this._tracks = {};
     this._target = target;
+    this._path = path || '';
 
     this._loop = loop || false;
 
