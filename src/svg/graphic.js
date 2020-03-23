@@ -100,6 +100,8 @@ function bindStyle(svgEl, style, isText, el) {
     else {
         attr(svgEl, 'stroke', NONE);
     }
+
+    style.shapeRendering && attr(svgEl, 'shape-rendering', style.shapeRendering);
 }
 
 /***************************************************
@@ -236,10 +238,11 @@ svgPath.brush = function (el) {
 
     if (el.__dirtyPath) {
         path.beginPath();
-        path.subPixelOptimize = false;
+        // FIXBUG: el.subPixelOptimize 才好使
+        // path.subPixelOptimize = false; // buildPath使用的是el上的subPixelOptimize属性
+        el.subPixelOptimize = false;
         el.buildPath(path, el.shape);
         el.__dirtyPath = false;
-
         var pathStr = pathDataToString(path);
         if (pathStr.indexOf('NaN') < 0) {
             // Ignore illegal path, which may happen such in out-of-range

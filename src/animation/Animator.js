@@ -411,11 +411,6 @@ function createTrackClip(animator, easing, oneTrackDone, keyframes, propName, fo
                     value = interpolateNumber(kfValues[frame], kfValues[frame + 1], w);
                 }
 
-                if (target.y1 === 81 && percent === 0) {
-                    // eslint-disable-next-line no-console
-                    console.log(target.x1, kfValues);
-                }
-
                 setter(
                     target,
                     propName,

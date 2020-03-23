@@ -113,6 +113,8 @@ Path.prototype = {
                 path.setLineDashOffset(lineDashOffset);
             }
 
+            // FIXBUG: 关闭subPixelOptimize，解决动画过程中路径移动不流畅
+            this.subPixelOptimize = false;
             this.buildPath(path, this.shape, false);
 
             // Clear path dirty flag
